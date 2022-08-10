@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: recreate
+  labels:
+    env: prod
+spec:
+  replicas: 4
+  strategy:    
+    type: Recreate
+  selector:
+    matchLabels:
+       app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: recreate
+          image: httpd
+

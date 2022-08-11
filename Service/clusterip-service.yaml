@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-clusterip
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+       app: nginx-cip
+  template:
+    metadata:
+      labels:
+        app: nginx-cip
+    spec:
+      containers:
+      - name: httpd
+        image: sachet1994/httpd:v1
+        ports:
+        - containerPort: 80
+...
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-nginx
+spec:
+  selector:
+    app: nginx-cip
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+...
